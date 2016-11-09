@@ -8,15 +8,28 @@ public class BlackJack{
 		int value =0, num =0;
 		User ger = new User();
 		Card [] Deck = new Card[52];
+		String [] cImage = new String[52];
+		
+		
+		for(int i = 0; i < 52; i++){
+		    String temp = "cards/"+(i+1)+".bmp";
+		    cImage[i] = temp;	
+			
+			System.out.print(cImage[i] +"\n");
+		}
+
+		
+		BlackJackGUI table = new BlackJackGUI();
+		table.setVisible(true);
 		for(int j =0; j < 4; j++){
 			switch(j){
-				case 0: suit = "Hearts";
+				case 0: suit = "Clubs";
 						break;
 					
-				case 1: suit = "Clubs";
+				case 1: suit = "Diamonds";
 						break;
 						
-				case 2: suit = "Diamonds";
+				case 2: suit = "Hearts";
 						break;
 						
 				case 3: suit = "Spades";

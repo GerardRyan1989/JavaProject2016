@@ -1,4 +1,4 @@
-
+import javax.swing.*;
 
 public class BlackJack{
 	public static void main(String [] args){
@@ -8,16 +8,8 @@ public class BlackJack{
 		int value =0, num =0;
 		User ger = new User();
 		Card [] Deck = new Card[52];
-		String [] cImage = new String[52];
 		
-		
-		for(int i = 0; i < 52; i++){
-		    String temp = "cards/"+(i+1)+".bmp";
-		    cImage[i] = temp;	
-			
-			System.out.print(cImage[i] +"\n");
-		}
-
+	//	JOptionPane.showMessageDialog(null,new ImageIcon("cards/"+(1)+".jpg"));
 		
 		BlackJackGUI table = new BlackJackGUI();
 		table.setVisible(true);
@@ -79,7 +71,7 @@ public class BlackJack{
 		 		         value = 10;
 		 				break;
 		 	}
-		 	Deck[num] = new Card(name,suit,value);
+		 	Deck[num] = new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".bmp"));
 		 	
 		 	num++;
 		 

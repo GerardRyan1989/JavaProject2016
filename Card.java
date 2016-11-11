@@ -1,23 +1,26 @@
+import javax.swing.*;
 
 public class Card{
 	
 	private String name;
 	private String suit;
 	private int value;
-	
+	private ImageIcon cardImage;
 	public Card(){
 	
 		this.name = "";
 		this.suit = "";
 		this.value = 0;
+		this.cardImage = new ImageIcon("");
 	}
 	
 	
-	public Card(String name, String suit,int value){
+	public Card(String name, String suit,int value,ImageIcon cardImage){
 		
 		this.name = name;
 		this.suit = suit;
 		this.value = value;
+		this.cardImage = cardImage;
 		
 	}
 	

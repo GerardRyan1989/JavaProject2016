@@ -3,10 +3,10 @@ import java.awt.*;
 import javax.swing.*;
 //declaring class  and setting it so it can inherit from the JFrame class and implements the interface class actionlistener
 
-public class BlackJackGUI extends JFrame /*implements ActionListener*/ {
-	
-	private JButton hit, stick, deal;
-	private JLabel userCard1, userCard2, userCard3, userCard4, userCard5, usersHand, whiteSpace, dealerCard, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealersHand;
+public class BlackJackGUI extends JFrame implements ActionListener {
+	private int i=0, j =0;
+	private JButton hitbtn, stickbtn, dealbtn;
+	private JLabel userCard1, userCard2, userCard3, userCard4, userCard5, usersHand, whiteSpace, dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealersHand;
 	private JPanel crdholder, crdholder2, btnholder, spaceholder, spaceholder2;
 	private ImageIcon bcard, card1, card2, card3, card4, card5, dcard1, dcard2, dcard3, dacrd4, dcard5;
 	public BlackJackGUI(){
@@ -23,30 +23,42 @@ public class BlackJackGUI extends JFrame /*implements ActionListener*/ {
 		bcard = new ImageIcon("cards/backOfCard.jpg");
 		userCard1 = new JLabel();
 		userCard2 = new JLabel();
-		dealerCard = new JLabel();
+		userCard3  = new JLabel();
+		userCard4  = new JLabel();
+		userCard5  = new JLabel();
+		dealerCard1 = new JLabel();
 		dealerCard2 = new JLabel();
+		dealerCard3 =new JLabel();
+    	dealerCard4 =new JLabel();
+    	dealerCard5 =new JLabel();
 		usersHand = new JLabel("Users Hand: ");
 		dealersHand = new JLabel("Dealers Hand: ");
 		whiteSpace = new JLabel();
-		dealerCard.setIcon(bcard);
+		dealerCard1.setIcon(bcard);
 		dealerCard2.setIcon(bcard);
+		dealerCard3.setIcon(bcard);
+		dealerCard4.setIcon(bcard);
+		dealerCard5.setIcon(bcard);
 	    userCard1.setIcon(bcard);
 	    userCard2.setIcon(bcard);
-		deal = new JButton("Deal");
-		hit = new JButton("Hit");
-		stick = new JButton("Stick");
+	    userCard3.setIcon(bcard);
+	    userCard4.setIcon(bcard);
+	    userCard5.setIcon(bcard);
+		dealbtn = new JButton("Deal");
+		hitbtn = new JButton("Hit");
+		stickbtn = new JButton("Stick");
 		Font font = new Font("Arial", Font.BOLD, 24);
-		deal.setBackground(Color.white);
-		deal.setForeground(Color.black);
-		deal.setFont(font);
-		hit.setBackground(Color.white);
-		hit.setForeground(Color.black);
-		hit.setFont(font);
-		stick.setBackground(Color.white);
-		stick.setForeground(Color.black);
-	    stick.setFont(font);
+		dealbtn.setBackground(Color.white);
+		dealbtn.setForeground(Color.black);
+		dealbtn.setFont(font);
+		hitbtn.setBackground(Color.white);
+		hitbtn.setForeground(Color.black);
+		hitbtn.setFont(font);
+		stickbtn.setBackground(Color.white);
+		stickbtn.setForeground(Color.black);
+	    stickbtn.setFont(font);
 	    crdholder2.add(dealersHand);
-	    crdholder2.add(dealerCard);
+	    crdholder2.add(dealerCard1);
 	    crdholder2.add(dealerCard2);
 	    crdholder2.setBackground(Color.green);
 	    add(crdholder2);
@@ -61,11 +73,87 @@ public class BlackJackGUI extends JFrame /*implements ActionListener*/ {
 	    crdholder.add(userCard2);
 	    crdholder.setBackground(Color.green);
 	    add(crdholder);
-	    btnholder.add(deal);
-		btnholder.add(hit);
-		btnholder.add(stick);
+	    btnholder.add(dealbtn);
+		btnholder.add(hitbtn);
+		btnholder.add(stickbtn);
 		btnholder.setBackground(Color.black);
 		add(btnholder);
+		
+		
+		hitbtn.addActionListener(this);
+		dealbtn.addActionListener(this);
+		stickbtn.addActionListener(this);
 
 	}
+	    
+		public void actionPerformed(ActionEvent e) {
+		
+			if (e.getSource() == hitbtn){
+					if(i==0){
+						crdholder.add(userCard3);
+						crdholder.revalidate();
+						crdholder.repaint();
+					}
+					
+					if(i==1){
+						crdholder.add(userCard4);
+						crdholder.revalidate();
+						crdholder.repaint();
+					}
+					
+					if(i==2){
+						crdholder.add(userCard5);
+						crdholder.revalidate();
+						crdholder.repaint();
+					}			   	
+			   	
+			   	    if(i > 2){
+			   	    
+			   	    JOptionPane.showMessageDialog(null,"Maximum number of cards Selected");		
+			   	    }
+			   	i++;
+			}
+			if(e.getSource() == dealbtn){
+					crdholder.remove(userCard3);
+				    crdholder.remove(userCard4);
+				    crdholder.remove(userCard5);
+					crdholder.revalidate();
+					crdholder.repaint();
+					
+					crdholder2.remove(dealerCard3);
+				    crdholder2.remove(dealerCard4);
+				    crdholder2.remove(dealerCard5);
+					crdholder2.revalidate();
+					crdholder2.repaint();
+			}	
+			
+		
+				if (e.getSource() == stickbtn){
+			   
+				   if(j < 5)
+					   {
+					   	 crdholder2.add(dealerCard3);
+					   	 crdholder2.revalidate();
+						 crdholder2.repaint();
+							 if(j < 5 )
+							   {
+							   	 crdholder2.add(dealerCard4);
+							   	 crdholder2.revalidate();
+								 crdholder2.repaint();
+							   } 
+							   	 if(j < 5)
+								   {
+								   	 crdholder2.add(dealerCard5);
+								   	 crdholder2.revalidate();
+									 crdholder2.repaint();
+								   } 
+					   } 
+				   else{
+				   		JOptionPane.showMessageDialog(null,"Maximum number of cards Selected");	
+				   }
+
+				   
+			}
+		}	    
+			  
 }

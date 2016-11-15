@@ -17,9 +17,27 @@ public class Card{
 	}
 	
     
-	public String toString(){
+	
+	
+	public String getName(){
+		return name;
+	}
+	
+	public String getSuit(){
+		return suit;
+	}
+	
+	public int getValue(){
+		return value;
+	}
+	
+	
 		
+	public String getImage(){
+		return cardImage.toString();
+	}
+	
+	public String toString(){
 		return name + " " + suit + " " + value + " " + cardImage;
 	}	
-	
 }

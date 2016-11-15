@@ -6,14 +6,6 @@ public class Card{
 	private String suit;
 	private int value;
 	private ImageIcon cardImage;
-	public Card(){
-	
-		this.name = "";
-		this.suit = "";
-		this.value = 0;
-		this.cardImage = new ImageIcon("");
-	}
-	
 	
 	public Card(String name, String suit,int value,ImageIcon cardImage){
 		
@@ -24,10 +16,10 @@ public class Card{
 		
 	}
 	
-	
+
 	public String toString(){
 		
-		return name + " " + suit + " " + value;
+		return name + " " + suit + " " + value + "" + cardImage;
 	}	
 	
 }

@@ -4,15 +4,17 @@ import javax.swing.*;
 //declaring class  and setting it so it can inherit from the JFrame class and implements the interface class actionlistener
 
 public class BlackJackGUI extends JFrame implements ActionListener {
-	private int i=0, j =0;
-	private JButton hitbtn, stickbtn, dealbtn;
+	
+	private int i=0, j =0;private 
+	JButton hitbtn, stickbtn, dealbtn;
 	private JLabel userCard1, userCard2, userCard3, userCard4, userCard5, usersHand, whiteSpace, dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealersHand;
 	private JPanel crdholder, crdholder2, btnholder, spaceholder, spaceholder2;
 	private ImageIcon bcard, card1, card2, card3, card4, card5, dcard1, dcard2, dcard3, dacrd4, dcard5;
+	
 	public BlackJackGUI(){
 		super("BlackJack");
 		setSize(800,600);
-		setLocation(50,50);
+		setLocation(150,150);
 		setLayout(new GridLayout(5,1));
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     	btnholder = new JPanel(new FlowLayout());
@@ -109,7 +111,8 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			   	
 			   	    if(i > 2){
 			   	    
-			   	    JOptionPane.showMessageDialog(null,"Maximum number of cards Selected");		
+			   	    JOptionPane.showMessageDialog(null,"Maximum number of cards Selected");	
+			   	    
 			   	    }
 			   	i++;
 			}
@@ -125,6 +128,8 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 				    crdholder2.remove(dealerCard5);
 					crdholder2.revalidate();
 					crdholder2.repaint();
+					
+					i = 0;
 			}	
 			
 		

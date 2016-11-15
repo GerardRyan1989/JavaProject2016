@@ -1,21 +1,16 @@
 import javax.swing.*;
+import java.util.*;
+import java.util.ArrayList;
 
-public class BlackJack{
-	public static void main(String [] args){
-		
-		//String suit="";
-		//String name="";
-		//int value =0, num =0;
-	//	User ger = new User();
-		//Card [] Deck = new Card[52];
-	//	Card [] shuffled = new Card[52];
-		
-	//	JOptionPane.showMessageDialog(null,new ImageIcon("cards/"+(1)+".jpg"));
-		MainMenuGUI mainMenu = new MainMenuGUI();
+public class Deck{
 	
-		//BlackJackGUI table = new BlackJackGUI();
-		//table.setVisible(true);
-	/*	for(int j =0; j < 4; j++){
+	
+	String suit="";
+	private String name="";
+	private int value =0, num =0;
+    Card [] deck = new Card[52];
+	public Deck(){
+		for(int j =0; j < 4; j++){
 			switch(j){
 				case 0: suit = "Clubs";
 						break;
@@ -73,15 +68,20 @@ public class BlackJack{
 		 		         value = 10;
 		 				break;
 		 	}
-		 	Deck[num] = new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".jpg"));
+		 	deck[num] =new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".jpg"));
+		 	
 		 	
 		 	num++;
 		 	
 			}
-		}*/
 		
-		
-		
-	
-	}
+		}	
+	}	
+			public static void main(String args[]){
+				for(int i =0; i < 52; i++)
+				{
+					System.out.print(deck[i] +"\n");
+				}
+			}
 }
+

@@ -6,7 +6,7 @@ public class User{
 	private double balance;
 	
 	public User(){
-		this("jimmy",0,0.0);
+		this("Unknown",0,0.0);
 	}
 	
 	public User(String uName, int age, double balance){

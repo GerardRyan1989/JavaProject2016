@@ -8,7 +8,10 @@ public class Deck{
 	String suit="";
 	private String name="";
 	private int value =0, num =0;
-    Card [] deck = new Card[52];
+    static Card [] deck = new Card[52];
+    static int [] gg = new int[52];
+    static Card [] shuffled = new Card[52];
+	
 	public Deck(){
 		for(int j =0; j < 4; j++){
 			switch(j){
@@ -68,20 +71,50 @@ public class Deck{
 		 		         value = 10;
 		 				break;
 		 	}
-		 	deck[num] =new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".jpg"));
-		 	
+		 	deck[num] = new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".jpg"));
 		 	
 		 	num++;
 		 	
 			}
-		
-		}	
-	}	
-			public static void main(String args[]){
-				for(int i =0; i < 52; i++)
-				{
-					System.out.print(deck[i] +"\n");
+		}
+			
+	}
+	
+	public void shuffledDeck(){
+		boolean [] check = new boolean[52];
+	    
+		for(int i = 0; i < 52; i++)
+			{
+				int random = (int)(Math.random()*52);
+				
+				while(check[random])
+				{	
+						random = (int)(Math.random()*52);	
 				}
+				
+				//System.out.print(random + "  ");
+				
+				check[random] = true;
+				shuffled[i] = deck[random];
+				gg[i] = random;
 			}
+				
+		
+		}
+		
+		
+		
+	public static void main(String args[]){
+				Deck SD = new Deck();
+				//System.out.print(Deck.deck[i] +"\n");
+					
+			    SD.shuffledDeck();
+			    
+			    Arrays.sort(gg);
+			    
+			    for(int i = 0; i < gg.length; i++)
+					System.out.print(gg[i] + " " +" " + i +"\n");
+			
+	}
 }
 

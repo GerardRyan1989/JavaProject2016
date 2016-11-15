@@ -16,10 +16,10 @@ public class Card{
 		
 	}
 	
-
+    
 	public String toString(){
 		
-		return name + " " + suit + " " + value + "" + cardImage;
+		return name + " " + suit + " " + value + " " + cardImage;
 	}	
 	
 }

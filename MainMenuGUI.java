@@ -14,7 +14,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	public MainMenuGUI(){
 		super("Menu");
-		setSize(200,300);
+		setSize(1230,800);
 		setLocation(150,150);
 		setLayout(new FlowLayout());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -43,6 +43,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		backGround.add(backgroundImage);
 		add(menuStrip);
 		add(backGround);
+		setResizable(false);
 		setVisible(true);
 		
 	}

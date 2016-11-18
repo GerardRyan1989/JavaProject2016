@@ -91,9 +91,9 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == rulesOfGame){
 			
-			JOptionPane.showMessageDialog(null,"***Rules of BlackJack***\n\n1: Each person Starts with 2 cards.\n2: \"Hit\"--  User takes another Card\n \"Stick\"--User takes no more cards and sticks with current hand\n"+
-				"\n \"Deal\"--  A new game of BlackJack is started\n  \"Stake\"-- The amount of money the user wish to bet on each game(odds are Even) \n3: The maximum cards a player can have at any one time  is 5." + 
-					"\n4: The winner is decided by hand has a greater value and/or  a hand greater than 21 results in a loss"+
+			JOptionPane.showMessageDialog(null,"***Rules of BlackJack***\n\n1: Each person Starts with 2 cards.\n2: \"Hit\"--  User takes another Card\n  \"Stick\"--User takes no more cards and sticks with current hand\n"
+				+ " " + "\"Deal\"--  A new game of BlackJack is started\n" + " " + "\"Stake\"-- The amount of money the user wish to bet on each game(odds are Even) \n3: The maximum cards a player can have at any one time  is 5." + 
+					"\n4: The winner is decided by hich hand has a greater value and/or if a hand greater than 21 results in a loss"+
 						" \n5: If the user has the same value as the dealer e.g. both the dealer and the user have  21, it will result in a split pot i.e both parties share the winnings");
 		}
 		if(e.getSource() == exit)	

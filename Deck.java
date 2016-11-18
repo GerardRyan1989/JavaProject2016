@@ -32,7 +32,7 @@ public class Deck{
 			for(int i = 0; i < 13; i++){
 		 	switch(i){
 		 		case 0: name = "Ace";
-		 				value = 11;
+		 				value = 1;
 		 				break;
 		 		case 1: name = "Two";
 		 			    value = 2;

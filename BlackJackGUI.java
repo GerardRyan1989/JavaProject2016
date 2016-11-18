@@ -5,14 +5,14 @@ import javax.swing.*;
 
 public class BlackJackGUI extends JFrame implements ActionListener {
 	
-	private int i=0, j =0, f =0;
-	private JButton hitbtn, stickbtn, dealbtn;
-	private JLabel userCard1, userCard2, userCard3, userCard4, userCard5, usersHand, whiteSpace, dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealersHand;
+	private int i=0, j =0, f =0, ace =0;
+	private JButton hitbtn, stickbtn, dealbtn, stakebtn;
+	private JLabel userCard1, userCard2, userCard3, userCard4, userCard5, usersHand, whiteSpace, infoHold, dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealersHand;
 	private JPanel crdholder, crdholder2, btnholder, spaceholder, spaceholder2;
 	private ImageIcon bcard, card1, card2, card3, card4, card5, dcard1, dcard2, dcard3, dcard4, dcard5;
 	Card [] shuffled = new Card[52];
-	int userValue =0 , dealerValue=0;
-	
+	private int userValue =0 , dealerValue=0;
+	private double stake = 0;
 	public BlackJackGUI(){
 		super("BlackJack");
 		setSize(800,600);
@@ -46,7 +46,8 @@ public class BlackJackGUI extends JFrame implements ActionListener {
     	dealerCard5 =new JLabel();
 		usersHand = new JLabel("Users Hand: ");
 		dealersHand = new JLabel("Dealers Hand: ");
-		whiteSpace = new JLabel();
+		infoHold = new JLabel("you Have: " + userValue + "\nYour stake is  set at: €" + stake + "\nYour balance is: €");
+		whiteSpace = new JLabel("");
 		dealerCard1.setIcon(bcard);
 		dealerCard2.setIcon(bcard);
 		dealerCard3.setIcon(dcard3);
@@ -59,6 +60,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 		dealbtn = new JButton("Deal");
 		hitbtn = new JButton("Hit");
 		stickbtn = new JButton("Stick");
+		stakebtn = new JButton("Set Stake");
 		Font font = new Font("Arial", Font.BOLD, 24);
 		dealbtn.setBackground(Color.white);
 		dealbtn.setForeground(Color.black);
@@ -69,6 +71,9 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 		stickbtn.setBackground(Color.white);
 		stickbtn.setForeground(Color.black);
 	    stickbtn.setFont(font);
+	    stakebtn.setBackground(Color.white);
+		stakebtn.setForeground(Color.black);
+		stakebtn.setFont(font);
 	    crdholder2.add(dealersHand);
 	    crdholder2.add(dealerCard1);
 	    crdholder2.add(dealerCard2);
@@ -83,8 +88,9 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 	    crdholder.setBackground(Color.green);
 	    add(crdholder);
 	    spaceholder2.setBackground(Color.green);
-	    spaceholder2.add(whiteSpace);
+	    spaceholder2.add(infoHold);
 	    add(spaceholder2);
+	    btnholder.add(stakebtn);
 	    btnholder.add(dealbtn);
 		btnholder.add(hitbtn);
 		btnholder.add(stickbtn);
@@ -93,6 +99,10 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 		hitbtn.addActionListener(this);
 		dealbtn.addActionListener(this);
 		stickbtn.addActionListener(this);
+		stakebtn.addActionListener(this);
+		stickbtn.setVisible(false);
+		hitbtn.setVisible(false);
+		setResizable(false);
 		Deck deck = new Deck();
 		deck.shuffledDeck();
 		for(int i = 0; i < shuffled.length; i++)
@@ -104,88 +114,123 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 		
 			if (e.getSource() == hitbtn){
-					if(i==0){
-					    
+					
+					
+					if(i == 0){
 						card1 = new ImageIcon(shuffled[j].getImage());
 						userCard1.setIcon(card1);
 						userValue += shuffled[j].getValue();
 						j++;
 						crdholder.add(userCard1);
+					}
+					if(i == 1)
+					{
+					
 						card2 = new ImageIcon(shuffled[j].getImage());
 						userCard2.setIcon(card2);
 						crdholder.add(userCard2);
 						userValue += shuffled[j].getValue();
 						j++;
-						System.out.print(userValue);
 						crdholder.revalidate();
 						crdholder.repaint();
-			
+						 
 					}
 					
-					if(i==1){
+				
+					
+					if(i==2){
 						card3 = new ImageIcon(shuffled[j].getImage());
 						userCard3.setIcon(card3);
 						crdholder.add(userCard3);
 						userValue += shuffled[j].getValue();
-						 if(userValue > 11 && shuffled[j].getName().equals("Ace") || userValue > 11 && shuffled[j-1].getName().equals("Ace") ||
-						 	  userValue > 11 && shuffled[j-2].getName().equals("Ace"))
-			   	   		 {
-			   	   			userValue -=10;
-			   	  		 }
-						System.out.print(userValue);
+						
 						crdholder.revalidate();
 						crdholder.repaint();
 						j++;
 					}
 					
-					if(i==2){
+					if(i==3){
 						card4 = new ImageIcon(shuffled[j].getImage());
 						userCard4.setIcon(card4);
 						crdholder.add(userCard4);
 						userValue += shuffled[j].getValue();
-						 if(userValue > 11 && shuffled[j].getName().equals("Ace")) 
-			   	   		 {
-			   	   			userValue -=10;
-			   	  		 }
+						 
 						crdholder.revalidate();
 						crdholder.repaint();
-						System.out.print(userValue);
+						
 						j++;
 					}			   	
-			   		if(i==3){
+			   		if(i==4){
 			   			card5 = new ImageIcon(shuffled[j].getImage());
 						userCard5.setIcon(card5);
 						crdholder.add(userCard5);
 						userValue += shuffled[j].getValue();
-						 if(userValue > 11 && shuffled[j].getName().equals("Ace"))
-			   	   		 {
-			   	   			userValue -=10;
-			   	  		 }
 						crdholder.revalidate();
-						crdholder.repaint();
+				        crdholder.repaint();
 						j++;
-						System.out.print(userValue);
+						
 			   		}
 			   	    
-			   	    if(i > 3){
+			   	    if(i > 4){
 			   	    
 			   	    JOptionPane.showMessageDialog(null,"Maximum number of cards Selected");	
 			   	    
 			   	    }
-			   	  
+			   	    
+					if(shuffled[j].getName().equals("Ace"))
+					{
+						ace++;
+					}
+						   	   
+					if(userValue >11)
+					{
+						stickbtn.setVisible(true);
+					}
+					
+					if(userValue < 11 && ace > 0)
+					{
+						stickbtn.setVisible(true);
+					}
+					
+					
+				infoHold.setText("Your Hand is: " + userValue+ " Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €");	
+				
+					if(j > 50)
+			   	   		{
+			   	   			Deck SD = new Deck();
+			   	   			SD.shuffledDeck();
+			   	   			for(int x =0; x < shuffled.length; x++)
+					   	   			{
+					   	   				shuffled[x] = SD.shuffled[x];	
+					   	   			}
+			   	   		   JOptionPane.showMessageDialog(null,"The current deck in use is now empty....\n\n\nplease wait while the dealer shuffles a new deck");
 			   	   	
+			   	   			j=0;
+			   	  		 }	
+					   	    
+				   	     
+			   	   
+			   	  System.out.print(userValue); 
+			   	   
 			   	   if(userValue > 21)
 			   	   {
-			   	   	  JOptionPane.showMessageDialog(null,"Dealer wins as you have bust \n\nPress Deal to start a new hand","Not This Time", JOptionPane.INFORMATION_MESSAGE);
-			  		  hitbtn.setVisible(false);
+			   	   	  JOptionPane.showMessageDialog(null,"Dealer wins as you have bust \n\nPress Deal to start a new hand" +"\nYou had: " + userValue,"Not This Time", JOptionPane.INFORMATION_MESSAGE);
+			   	   	  dealbtn.setVisible(true);
 			  		  stickbtn.setVisible(false);
+			  		  hitbtn.setVisible(false);
+			  		  stakebtn.setVisible(true);
 			   	   }
+			   	   
+			   	  
 			   	i++;
 			}
 			
 			if(e.getSource() == dealbtn){
+				    ace =0;
+					stakebtn.setVisible(false);
+					dealbtn.setVisible(false);
 					hitbtn.setVisible(true);
-			  		stickbtn.setVisible(true);
+			  		stickbtn.setVisible(false);
 					userValue = 0;
 			   	   	dealerValue = 0;
 					crdholder.remove(userCard1);
@@ -212,13 +257,48 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 					crdholder2.revalidate();
 					crdholder2.repaint();
 					
+					if(j >50)
+			   	   		{
+			   	   			Deck SD = new Deck();
+			   	   			SD.shuffledDeck();
+			   	   			for(int x =0; x < shuffled.length; x++)
+					   	   			{
+					   	   				shuffled[x] = SD.shuffled[x];	
+					   	   			}
+			   	   		   JOptionPane.showMessageDialog(null,"The current deck in use is now empty....\n\n\nplease wait while the dealer shuffles a new deck");
+			   	   	
+			   	   			j=0;
+			   	  		 }
 					i = 0;
+					infoHold.setText("Your Hand is: " + userValue+ " Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €");	
 			}	
 			
 		
 				if (e.getSource() == stickbtn){
-						hitbtn.setVisible(false);
-			  		    stickbtn.setVisible(false);
+						
+						if(j >50)
+			   	   		{
+			   	   			Deck SD = new Deck();
+			   	   			SD.shuffledDeck();
+			   	   			for(int x =0; x < shuffled.length; x++)
+					   	   			{
+					   	   				shuffled[x] = SD.shuffled[x];	
+					   	   			}
+			   	   		   JOptionPane.showMessageDialog(null,"The current deck in use is now empty....\n\n\nplease wait while the dealer shuffles a new deck");
+			   	   	
+			   	   			j=0;
+			   	  		 }
+			   	  		 
+						if(userValue <=11 && ace > 0)
+						{
+							userValue += 10;
+						}
+						if(userValue == 11 && ace >  0)
+						{
+							hitbtn.setVisible(false);
+						}
+						
+				    	
 						crdholder2.remove(dealerCard1);
 					    crdholder2.remove(dealerCard2);
 					    
@@ -268,26 +348,51 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 													j++;
 											   }
 				   
-			}
+		    	}
 			
 								if(dealerValue > 21)
 									{
-									   	JOptionPane.showMessageDialog(null,"***Congratulations***\nThe Dealer has Bust\nYou win this Time","Results",JOptionPane.INFORMATION_MESSAGE);
+									   	JOptionPane.showMessageDialog(null,"***Congratulations***\nThe Dealer has Bust\nYou win this Time" +"\nYou had: " + userValue,"Results",JOptionPane.INFORMATION_MESSAGE);
+									   	dealbtn.setVisible(true);
+			  		 					hitbtn.setVisible(false);
+			  							stickbtn.setVisible(false);
 									}
 									
 								if(dealerValue > userValue && dealerValue <= 21)
 									{
-										JOptionPane.showMessageDialog(null,"***Conmiserations*** \nThe dealer wins with " + dealerValue,"Results",JOptionPane.INFORMATION_MESSAGE);
+										JOptionPane.showMessageDialog(null,"***Conmiserations*** \nThe dealer wins with " + dealerValue +"\nYou had: " + userValue,"Results",JOptionPane.INFORMATION_MESSAGE);
+										dealbtn.setVisible(true);
+			  							hitbtn.setVisible(false);
+			  		 					stickbtn.setVisible(false);
 									}	   
 								
 								if(dealerValue == userValue)
 									{
 									    JOptionPane.showMessageDialog(null,"unfortunatley its a tie as you had " + userValue +
-									    	"the dealer had " + dealerValue,"Results",JOptionPane.INFORMATION_MESSAGE);	
+									    	" the dealer had " + dealerValue  ,"Results",JOptionPane.INFORMATION_MESSAGE);
+									    
+									    dealbtn.setVisible(true);
+			  		  					hitbtn.setVisible(false);
+			  		 					stickbtn.setVisible(false);	
 									}
 									   dealerValue =0;
-									   userValue =0;	
+									   userValue =0;
+									   
+						infoHold.setText("Your Hand is: " + userValue+ " Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €");	
+					
+						stakebtn.setVisible(true);
+					    dealbtn.setVisible(true);
+						hitbtn.setVisible(false);
+			  		    stickbtn.setVisible(false);
+						
+						
 							}	    
-										  
+			if (e.getSource() == stakebtn)
+			{
+			
+				stake = Double.parseDouble(JOptionPane.showInputDialog("Set Your Stake:"));
+				infoHold.setText("Your Hand is: " + userValue+ " Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €");
+						 
+			}					  
 	}
 }

@@ -101,20 +101,5 @@ public class Deck{
 				
 		
 		}
-		
-		
-		
-	public static void main(String args[]){
-				Deck SD = new Deck();
-				//System.out.print(Deck.deck[i] +"\n");
-					
-			    SD.shuffledDeck();
-			    
-			    Arrays.sort(gg);
-			    
-			    for(int i = 0; i < gg.length; i++)
-					System.out.print(gg[i] + " " +" " + i +"\n");
-			
-	}
 }
 

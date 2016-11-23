@@ -5,6 +5,8 @@ import javax.swing.*;
 
 public class MainMenuGUI extends JFrame implements ActionListener {
 	
+	private  float balance =0;
+	User u1;
 	ImageIcon blackjackBG = new ImageIcon("cards/background.jpg");
 	JLabel 	backgroundImage;
 	JMenuBar menuStrip;
@@ -14,7 +16,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	public MainMenuGUI(){
 		super("Menu");
-		setSize(1230,800);
+		setSize(400,400);
 		setLocation(150,150);
 		setLayout(new FlowLayout());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -48,7 +50,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		backGround.add(backgroundImage);
 		add(menuStrip);
 		add(backGround);
-		setResizable(false);
+		//setbounds(400,400);
 		setVisible(true);
 		
 	}
@@ -57,6 +59,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		if(e.getSource() == newGame)
 		{ 
 			BlackJackGUI table = new BlackJackGUI();
+			table.getBal(u1.getBalance());
 			table.setVisible(true);
 			this.setVisible(false);
 		}
@@ -69,25 +72,53 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		if(e.getSource() == newUser)
 		{   
 			int x = 1;
+			boolean valid=false;
+			String name;
+			int age =0;
+			double balance =0;
+		    u1 = new User();//declaring user
+		  do{
+			 
+			 name =JOptionPane.showInputDialog("Please enter your name: ");
+			 
 			do{
-		
-				 User u1 = new User();
-				 String name;
-				 int age;
-				 double balance;
-				 name =JOptionPane.showInputDialog("Please enter your name: ");
-				 u1.setName(name); 
-				 age = Integer.parseInt(JOptionPane.showInputDialog("please enter your Age: "));
+				
+			try{
+				 	age = Integer.parseInt(JOptionPane.showInputDialog("please enter your Age: "));
+				 	
+				 	valid = true;
+				 }catch(NumberFormatException a){
+				 	JOptionPane.showMessageDialog(null,"please enter a whole number for your age please");
+				 }
+			
+			}while(valid == false);
+			
+			valid = false;
+			
+			 
+			do{
+			try{
+				 	
+				 	balance = Double.parseDouble(JOptionPane.showInputDialog("Please enter in euros how much you wish to play with:"));
+				 	
+				 	valid = true;
+				 }catch(NumberFormatException a){
+				 	JOptionPane.showMessageDialog(null,"please enter a number in the format of \"99.99\"");
+				 }
+			
+			}while(valid == false);
+			
 				 u1.setAge(age);
-				 balance = Double.parseDouble(JOptionPane.showInputDialog("Please enter in euros how much you wish to play with:"));
+				 u1.setName(name); 
 				 u1.setBalance(balance);
-				 
-				 //JOptionPane.showMessageDialog(null,"Name: " + u1.getName() +"\nAge: " + u1.getAge() + "\nBalance: " + u1.getBalance());
-				 
+			 
 				 x = JOptionPane.showConfirmDialog(null,"Name: " + u1.getName() +"\nAge: " + u1.getAge() + "\nDeposit: " + u1.getBalance() +
 				 											"\n\nAre these details correct","Details",JOptionPane.YES_NO_OPTION);
 		
 			}while(x == 1);
+			
+			
+	
 		}
 		if(e.getSource() == rulesOfGame){
 			
@@ -108,6 +139,10 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	}
 	
+	//public void setBal(int balance)
+	//{
+	//	this.balance = balance;
+	//}
 	
 	public void message(){
 		JOptionPane.showMessageDialog(null,"not yet implemented");

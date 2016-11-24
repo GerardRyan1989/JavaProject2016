@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class Deck{
 	
 	
-	String suit="";
+	private String suit="";
 	private String name="";
 	private int value =0, num =0;
     static Card [] deck = new Card[52];
-    static int [] gg = new int[52];
     static Card [] shuffled = new Card[52];
 	
 	public Deck(){
@@ -92,11 +91,8 @@ public class Deck{
 						random = (int)(Math.random()*52);	
 				}
 				
-				//System.out.print(random + "  ");
-				
 				check[random] = true;
 				shuffled[i] = deck[random];
-				gg[i] = random;
 			}
 				
 		

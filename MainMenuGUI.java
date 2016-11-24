@@ -6,19 +6,19 @@ import javax.swing.*;
 public class MainMenuGUI extends JFrame implements ActionListener {
 	
 	private  float balance =0;
-	User u1;
-	ImageIcon blackjackBG = new ImageIcon("cards/background.jpg");
-	JLabel 	backgroundImage;
-	JMenuBar menuStrip;
-	JMenu file, play, register,info ;
-	JMenuItem newGame, loadGame, newUser, exit, rulesOfGame;
-	JPanel  backGround; 
+	private User u1;
+	private ImageIcon blackjackBG = new ImageIcon("cards/background.jpg");
+	private JLabel 	backgroundImage;
+	private JMenuBar menuStrip;
+	private JMenu file, play, register,info ;
+	private JMenuItem newGame, loadGame, newUser, exit, rulesOfGame;
+	private JPanel  backGround; 
 		
 	public MainMenuGUI(){
 		super("Menu");
-		setSize(400,400);
+		setSize(800,510);
 		setLocation(150,150);
-		setLayout(new FlowLayout());
+		//setLayout(new FlowLayout());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		newGame = new JMenuItem("new Game");
 		rulesOfGame = new JMenuItem("Rules of BlackJack");
@@ -48,9 +48,9 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		backgroundImage.setIcon(blackjackBG);
 		backGround = new JPanel();
 		backGround.add(backgroundImage);
-		add(menuStrip);
+		setJMenuBar(menuStrip);
 		add(backGround);
-		//setbounds(400,400);
+		setResizable(false);
 		setVisible(true);
 		
 	}
@@ -58,8 +58,12 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource() == newGame)
 		{ 
-			BlackJackGUI table = new BlackJackGUI();
-			table.getBal(u1.getBalance());
+			
+		BlackJackGUI table = new BlackJackGUI();
+			if(u1 != null)	
+			{
+				table.getBal(u1.getBalance());
+			}
 			table.setVisible(true);
 			this.setVisible(false);
 		}
@@ -73,7 +77,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		{   
 			int x = 1;
 			boolean valid=false;
-			String name;
+			String name  ="";
 			int age =0;
 			double balance =0;
 		    u1 = new User();//declaring user

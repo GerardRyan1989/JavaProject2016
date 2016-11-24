@@ -6,7 +6,10 @@ import javax.swing.*;
 public class BlackJackGUI extends JFrame implements ActionListener {
 	
 	private int i=0, j =0, f =0, ace =0;
-	private double balance;
+	private double balance =0;
+	private JMenuBar menu;
+	private JMenu file;
+	private JMenuItem exit, back;
 	private JButton hitbtn, stickbtn, dealbtn, stakebtn;
 	private JLabel userCard1, userCard2, userCard3, userCard4, userCard5, usersHand, whiteSpace, infoHold, dealerCard1, dealerCard2, dealerCard3, dealerCard4, dealerCard5, dealersHand;
 	private JPanel crdholder, crdholder2, btnholder, spaceholder, spaceholder2;
@@ -20,6 +23,17 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 		setLocation(150,150);
 		setLayout(new GridLayout(5,1));
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		back = new JMenuItem("Back");
+		exit = new JMenuItem("Exit");
+		file = new JMenu("file");
+		exit.addActionListener(this);
+		back.addActionListener(this);
+		file.add(back);
+		file.add(exit);
+		menu = new JMenuBar();
+		menu.add(file);
+		//add(menu);
+		setJMenuBar(menu);
     	btnholder = new JPanel(new FlowLayout());
     	crdholder = new JPanel(new FlowLayout());
         crdholder2 = new JPanel(new FlowLayout());
@@ -47,7 +61,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
     	dealerCard5 =new JLabel();
 		usersHand = new JLabel("Users Hand: ");
 		dealersHand = new JLabel("Dealers Hand: ");
-		infoHold = new JLabel("\nYour stake is  set at: €" + stake + "\nYour balance is: €"+ String.format("%.2f",balance));
+		infoHold = new JLabel("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));
 		whiteSpace = new JLabel("");
 		dealerCard1.setIcon(bcard);
 		dealerCard2.setIcon(bcard);
@@ -106,6 +120,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 		stickbtn.setVisible(false);
 		hitbtn.setVisible(false);
 		dealbtn.setVisible(false);
+		setResizable(false);
 		Deck deck = new Deck();
 		deck.shuffledDeck();
 		for(int i = 0; i < shuffled.length; i++)
@@ -236,7 +251,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			  		  hitbtn.setVisible(false);
 			  		  stakebtn.setVisible(true);
 			  		  balance -= stake;
-			  		  infoHold.setText("Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €" + String.format("%.2f",balance));
+			  		  infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));
 			   	   }
 			   	   
 			   	  
@@ -293,14 +308,16 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			   	  		do{
 			   	  		try{
 			   	  				int yesNO = 0;
-			   	  				yesNO =JOptionPane.showConfirmDialog(null,"Would you like deposit Money","Insuffiecnt Funds",JOptionPane.YES_NO_OPTION);
+			   	  				yesNO =JOptionPane.showConfirmDialog(null,"Your balance does not\n cover your stake \n\n"+
+			   	  						"Would you like deposit Money","Insuffiecnt Funds",JOptionPane.YES_NO_OPTION);
 			   	  				if(yesNO == 0)
 			   	  					{
 			   	  						balance += Integer.parseInt(JOptionPane.showInputDialog(null,"how much would you like to deposit:"));
 			   	  					}
 			   	  				else
 			   	  					{
-			   	  					stake = Double.parseDouble(JOptionPane.showInputDialog(null,"please reudce your Stake"));	
+			   	  					stake = Double.parseDouble(JOptionPane.showInputDialog(null,"please reudce your Stake as it\n" +
+			   	  						"it is greater than you balance\n enter new stake here:"));	
 			   	  					}
 				   	  			
 				   	  			
@@ -311,11 +328,12 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			   	  		}while(valid == false);
 			   	  	}
 					i = 0;
-					infoHold.setText("Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €" + balance);	
+					infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));	
 			}	
 			
 		
 				if (e.getSource() == stickbtn){
+						int k =0;
 						
 						if(j >45)
 			   	   		{
@@ -339,20 +357,17 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 				    	
 						crdholder2.remove(dealerCard1);
 					    crdholder2.remove(dealerCard2);
-					    
 			   	    	dcard1 = new ImageIcon(shuffled[j].getImage());
 						dealerCard1.setIcon(dcard1);
 						dealerValue += shuffled[j].getValue();
-						j++;
 						crdholder2.add(dealerCard1);
+						j++;
 						
 						dcard2 = new ImageIcon(shuffled[j].getImage());
 						dealerCard2.setIcon(dcard2);
 						dealerValue += shuffled[j].getValue();
 						crdholder2.add(dealerCard2);
 						j++;
-						
-						System.out.print("kk"  +dealerValue +"DD");
 						crdholder2.revalidate();
 						crdholder2.repaint(); 
 							
@@ -360,7 +375,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 				   {
 					   	dcard3 = new ImageIcon(shuffled[j].getImage());
 						dealerCard3.setIcon(dcard3);
-						dealerValue += shuffled[j].getValue();
+						dealerValue +=  shuffled[j].getValue();
 						crdholder2.add(dealerCard3);
 						crdholder2.revalidate();
 						crdholder2.repaint();
@@ -377,16 +392,28 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 									} 
 										   	 if(dealerValue < userValue && dealerValue < 21)
 											   {
-												   	card5 = new ImageIcon(shuffled[j].getImage());
+												   	dcard5 = new ImageIcon(shuffled[j].getImage());
 										  			dealerCard5.setIcon(dcard5);
 										  			dealerValue += shuffled[j].getValue();
 												   	crdholder2.add(dealerCard5);
 												   	crdholder2.revalidate();
 													crdholder2.repaint();
+													k=5;
 													j++;
 											   }
 				   
 		    	}
+		    	
+		    	
+		    	
+		    					if(dealerValue < 21 && dealerValue < userValue && k==5)
+									{
+									   	JOptionPane.showMessageDialog(null,"***Congratulations***\nYou win The Dealer has " + dealerValue +"You have " + userValue,"Results",JOptionPane.INFORMATION_MESSAGE);
+									   	dealbtn.setVisible(true);
+			  		 					hitbtn.setVisible(false);
+			  							stickbtn.setVisible(false);
+			  							balance += (stake*2);
+									}
 			
 								if(dealerValue > 21)
 									{
@@ -415,7 +442,9 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			  		  					hitbtn.setVisible(false);
 			  		 					stickbtn.setVisible(false);	
 									}
-								infoHold.setText("Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €" + String.format("%.2f",balance));
+							
+							
+								infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));
 								dealerValue =0;
 								userValue =0;
 									   
@@ -445,7 +474,32 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 					
 					
 				}while(valid == false);//end of do while statement		
-				infoHold.setText("Your Stake is: €" + String.format("%.2f",stake) + " your Balance is : €" + String.format("%.2f",balance)); 
+				infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance)); 
+			}
+			
+			if(e.getSource() == back)
+			{
+						this.setVisible(false);
+						MainMenuGUI menu = new MainMenuGUI();
+						menu.setVisible(true);
+			}
+			
+			if(e.getSource() == exit)
+			{
+				int x= 0;
+				
+				x = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit without Saving","Exit",JOptionPane.YES_NO_OPTION);
+				if(x == 0)
+					{
+							
+							System.exit(0);
+					}	
+				else
+					{
+						  JOptionPane.showMessageDialog(null,"To save game go back to menu");	
+					}
+				
+			
 			}					  
 	}
 	public void getBal(double bal)

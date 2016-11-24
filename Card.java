@@ -16,9 +16,6 @@ public class Card{
 		
 	}
 	
-    
-	
-	
 	public String getName(){
 		return name;
 	}
@@ -30,8 +27,6 @@ public class Card{
 	public int getValue(){
 		return value;
 	}
-	
-	
 		
 	public String getImage(){
 		return cardImage.toString();

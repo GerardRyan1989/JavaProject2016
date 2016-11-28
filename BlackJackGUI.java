@@ -17,7 +17,8 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 	Card [] shuffled = new Card[52];
 	private int userValue =0 , dealerValue=0;
 	private double stake = 0;
-	public BlackJackGUI(){
+	
+public BlackJackGUI(){
 		super("BlackJack");
 		setSize(800,600);
 		setLocation(150,150);
@@ -304,6 +305,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			   	  		 }
 			   	  		 
 			   	  	while(stake > balance){
+			   	  	
 			   	  		boolean valid = false;
 			   	  		do{
 			   	  		try{
@@ -326,6 +328,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 				   	  			JOptionPane.showMessageDialog(null,"please enter a number in the format of \"99.99\"");
 				   	  		}
 			   	  		}while(valid == false);
+			   	  	
 			   	  	}
 					i = 0;
 					infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));	
@@ -412,7 +415,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 									   	dealbtn.setVisible(true);
 			  		 					hitbtn.setVisible(false);
 			  							stickbtn.setVisible(false);
-			  							balance += (stake*2);
+			  							balance += stake;
 									}
 			
 								if(dealerValue > 21)
@@ -421,7 +424,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 									   	dealbtn.setVisible(true);
 			  		 					hitbtn.setVisible(false);
 			  							stickbtn.setVisible(false);
-			  							balance += (stake*2);
+			  							balance += stake;
 									}
 									
 								if(dealerValue > userValue && dealerValue <= 21)
@@ -487,7 +490,7 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 			if(e.getSource() == exit)
 			{
 				int x= 0;
-				
+			
 				x = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit without Saving","Exit",JOptionPane.YES_NO_OPTION);
 				if(x == 0)
 					{
@@ -497,13 +500,14 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 				else
 					{
 						  JOptionPane.showMessageDialog(null,"To save game go back to menu");	
-					}
-				
-			
-			}					  
-	}
+					}				  
+			}
+
+}
+
 	public void getBal(double bal)
 	{
 		this.balance = bal;
 	}
+	
 }

@@ -1,7 +1,11 @@
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import java.io.*;
+import java.util.*;
 //declaring class  and setting it so it can inherit from the JFrame class and implements the interface class actionlistener
+
+@SuppressWarnings({"unchecked", "deprecation"})
 
 public class MainMenuGUI extends JFrame implements ActionListener {
 	
@@ -11,12 +15,13 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 	private JLabel 	backgroundImage;
 	private JMenuBar menuStrip;
 	private JMenu file, play, register,info ;
-	private JMenuItem newGame, loadGame, newUser, exit, rulesOfGame;
+	private JMenuItem newGame, loadGame, saveGame, newUser, exit, rulesOfGame;
 	private JPanel  backGround; 
+	private	ArrayList <User>users = new ArrayList<User>();
 		
 	public MainMenuGUI(){
 		super("Menu");
-		setSize(800,510);
+		setSize(725,510);
 		setLocation(150,150);
 		//setLayout(new FlowLayout());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -25,7 +30,9 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		newGame.addActionListener(this);
 		rulesOfGame.addActionListener(this);
 		loadGame = new JMenuItem("load Game");
+		saveGame = new JMenuItem("Save Game");
 		loadGame.addActionListener(this);
+		saveGame.addActionListener(this);
 		register = new JMenu("Register");
 		info = new JMenu("Information");
 		file= new JMenu("File");
@@ -35,6 +42,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		newUser.addActionListener(this);
 		info.add(rulesOfGame);
 		register.add(newUser);
+		file.add(saveGame);
 		file.add(exit);
 		exit.addActionListener(this);
 		play.add(newGame);
@@ -55,11 +63,11 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-		
+		BlackJackGUI table = new BlackJackGUI();
 		if(e.getSource() == newGame)
 		{ 
 			
-		BlackJackGUI table = new BlackJackGUI();
+		
 			if(u1 != null)	
 			{
 				table.getBal(u1.getBalance());
@@ -70,7 +78,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource() == loadGame)
 		{
-			message();
+			open();
 		}
 		
 		if(e.getSource() == newUser)
@@ -141,14 +149,56 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 			
 		}
 		
+		if(e.getSource() == saveGame)
+		{
+		try{
+                save();
+            }
+            catch (IOException f){
+                 f.printStackTrace();
+            }
+		}	
+			
+		if(e.getSource() == loadGame)
+		{
+			String gamenum ="";
+			open();
+			JTextArea area = new JTextArea("choose your game");
+			for(int i =0; i < users.size(); i++){
+				gamenum += toString(users.get(i));
+			}
+			  gamenum += "\n\n please choose the number of the game you wish to load"; 
+			   
+			JOptionPane.showInputDialog(gamenum);
+			
+			
+		}	
 	}
 	
-	//public void setBal(int balance)
-	//{
-	//	this.balance = balance;
-	//}
-	
-	public void message(){
-		JOptionPane.showMessageDialog(null,"not yet implemented");
+	public void setBal(int balance)
+	{
+		this.balance = balance;
 	}
+	
+	public void save() throws IOException {
+      	
+      		ObjectOutputStream os;
+      		os = new ObjectOutputStream(new FileOutputStream ("users.dat"));
+      		os.writeObject(users);
+      		os.close();
+      	
+      }
+      
+      public void open() {
+      	try{
+      	  ObjectInputStream is;
+      	  is = new ObjectInputStream(new FileInputStream ("users.dat"));
+          users  = (ArrayList<User>) is.readObject(); // CHANGED
+      	  is.close();
+      	}
+      	catch(Exception e){
+      		JOptionPane.showMessageDialog(null,"open didn't work");
+      		e.printStackTrace();
+      	}
+      } // end
 }

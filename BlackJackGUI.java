@@ -17,9 +17,11 @@ public class BlackJackGUI extends JFrame implements ActionListener {
 	Card [] shuffled = new Card[52];
 	private int userValue =0 , dealerValue=0;
 	private double stake = 0;
+	private MainMenuGUI mainMenu;
 	
-public BlackJackGUI(){
-		super("BlackJack");
+public BlackJackGUI(MainMenuGUI mainMenu){
+		super("BlackJack"); 
+		this.mainMenu = mainMenu;
 		setSize(800,600);
 		setLocation(150,150);
 		setLayout(new GridLayout(5,1));
@@ -255,6 +257,7 @@ public BlackJackGUI(){
 			  		  infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));
 			   	   }
 			   	   
+			   	   
 			   	  
 			   	i++;
 			}
@@ -328,7 +331,7 @@ public BlackJackGUI(){
 				   	  			JOptionPane.showMessageDialog(null,"please enter a number in the format of \"99.99\"");
 				   	  		}
 			   	  		}while(valid == false);
-			   	  	
+			   	  		
 			   	  	}
 					i = 0;
 					infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));	
@@ -450,7 +453,7 @@ public BlackJackGUI(){
 								infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance));
 								dealerValue =0;
 								userValue =0;
-									   
+								   
 							
 					
 						stakebtn.setVisible(true);
@@ -478,13 +481,15 @@ public BlackJackGUI(){
 					
 				}while(valid == false);//end of do while statement		
 				infoHold.setText("Stake: €" + String.format("%.2f",stake) + "\t Balance: €" + String.format("%.2f",balance)); 
+				
 			}
 			
 			if(e.getSource() == back)
 			{
+					    MainMenuGUI.setBal(balance);
+					    mainMenu.setVisible(true);
 						this.setVisible(false);
-						MainMenuGUI menu = new MainMenuGUI();
-						menu.setVisible(true);
+						
 			}
 			
 			if(e.getSource() == exit)

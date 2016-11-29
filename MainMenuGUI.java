@@ -8,8 +8,8 @@ import java.util.*;
 @SuppressWarnings({"unchecked", "deprecation"})
 
 public class MainMenuGUI extends JFrame implements ActionListener {
-	
-	private float balance =0;
+	private int gamenum =0;
+	private static double balance =0;
 	private User u1;
 	private ImageIcon blackjackBG = new ImageIcon("cards/background.jpg");
 	private JLabel 	backgroundImage;
@@ -22,7 +22,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	public MainMenuGUI(){
 		super("Menu");
-		setSize(725,510);
+		setSize(800,600);
 		setLocation(150,150);
 		//setLayout(new FlowLayout());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -64,7 +64,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-    table = new BlackJackGUI();
+    table = new BlackJackGUI(this);
 		if(e.getSource() == newGame)
 		{ 
 			
@@ -89,7 +89,9 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 			String name  ="";
 			int age =0;
 			double balance =0;
-		    u1 = new User();//declaring user
+		    u1 = new User();
+		   
+		    
 		  do{
 			 
 			 name =JOptionPane.showInputDialog("Please enter your name: ");
@@ -124,14 +126,20 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 				 u1.setAge(age);
 				 u1.setName(name); 
 				 u1.setBalance(balance);
-			 
+			 	 
 				 x = JOptionPane.showConfirmDialog(null,"Name: " + u1.getName() +"\nAge: " + u1.getAge() + "\nDeposit: " + u1.getBalance() +
 				 											"\n\nAre these details correct","Details",JOptionPane.YES_NO_OPTION);
 		
 			}while(x == 1);
 			
-			
-	
+		 users.add(u1);	
+		 try{
+		    
+		    		save();
+		     }
+            catch (IOException f){
+                 f.printStackTrace();
+            }
 		}
 		if(e.getSource() == rulesOfGame){
 			
@@ -152,10 +160,12 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 		if(e.getSource() == saveGame)
 		{
+			
 		try{
-				JOptionPane.showMessageDialog(null,"Save Successful");
+				u1.setBalance(balance);
 				addUser();
                 save();
+                JOptionPane.showMessageDialog(null,"Save Successful");
             }
             catch (IOException f){
                  f.printStackTrace();
@@ -166,7 +176,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		{
 			String output ="";
 			boolean valid = false;
-			int gamenum =0;
+			
 			open();
 		
 			for(int i =0; i < users.size(); i++){
@@ -182,28 +192,30 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 				}  		
 			}while(valid == false); 	
 			
-			
+			u1 = users.get(gamenum);
 			u1.setName(users.get(gamenum).getName());
 			u1.setAge(users.get(gamenum).getAge());
 			u1.setBalance(users.get(gamenum).getBalance());
 			table.getBal(u1.getBalance());
 			
+			JOptionPane.showMessageDialog(null, u1.getName() + "\n" + u1.getAge() + "\n" + u1.getBalance());
+			
 		}	
 	}
 	
-//	public void setBal(int balance)
-//	{
-//		this.balance = balance;
-//	}
+	public static void setBal(double bal)
+	{
+		balance = bal;	
+	}
 	
 	public void addUser(){
-        User temp = new User(u1.getName(),u1.getAge(), u1.getBalance());
-      	
-      	users.add(temp); 
+        //User temp = new User(u1.getName(),u1.getAge(), u1.getBalance());
+      	users.remove(gamenum);
+      	users.add(gamenum, u1); 
       }
 	
 	public void save() throws IOException {
-      	
+      		
       		ObjectOutputStream os;
       		os = new ObjectOutputStream(new FileOutputStream ("users.dat"));
       		os.writeObject(users);

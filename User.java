@@ -83,7 +83,10 @@ public class User implements Serializable{
 	public double getBalance(){
 		return balance;
 	}
-	
+	/**
+	 *returns user details
+	 *@return string value of users forename and  surname, age and balance
+	 */
 	public String toString(){
 		return uName +" " + age + " €" + String.format("%.2f",balance);
 	}

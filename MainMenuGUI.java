@@ -64,23 +64,29 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-    table = new BlackJackGUI(this);
+    	table = new BlackJackGUI(this);
 		if(e.getSource() == newGame)
 		{ 
-			
-		
-			if(u1 != null)	
+			if(u1==null)
 			{
-				table.getBal(u1.getBalance());
+				JOptionPane.showMessageDialog(null,"Please either load a user or register a new user");
 			}
-			table.setVisible(true);
-			this.setVisible(false);
+			//if(!u1.getName().equals("Unknown") && u1.getAge() != 0)
+			else	
+				{
+					table.getBal(u1.getBalance());
+					table.setVisible(true);
+					this.setVisible(false);
+				}
+			/*else
+				{
+					JOptionPane.showMessageDialog(null,"Please either load a user or register a new user");
+				}*/
 		}
-		
-		if(e.getSource() == loadGame)
-		{
-			open();
-		}
+	///	if(e.getSource() == loadGame)
+		///{
+	//		open();
+	//	}
 		
 		if(e.getSource() == newUser)
 		{   

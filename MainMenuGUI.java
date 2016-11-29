@@ -9,7 +9,7 @@ import java.util.*;
 
 public class MainMenuGUI extends JFrame implements ActionListener {
 	
-	private  float balance =0;
+	private float balance =0;
 	private User u1;
 	private ImageIcon blackjackBG = new ImageIcon("cards/background.jpg");
 	private JLabel 	backgroundImage;
@@ -18,6 +18,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 	private JMenuItem newGame, loadGame, saveGame, newUser, exit, rulesOfGame;
 	private JPanel  backGround; 
 	private	ArrayList <User>users = new ArrayList<User>();
+	private BlackJackGUI table; 
 		
 	public MainMenuGUI(){
 		super("Menu");
@@ -63,7 +64,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-		BlackJackGUI table = new BlackJackGUI();
+    table = new BlackJackGUI();
 		if(e.getSource() == newGame)
 		{ 
 			
@@ -152,6 +153,8 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		if(e.getSource() == saveGame)
 		{
 		try{
+				JOptionPane.showMessageDialog(null,"Save Successful");
+				addUser();
                 save();
             }
             catch (IOException f){
@@ -161,24 +164,43 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 			
 		if(e.getSource() == loadGame)
 		{
-			String gamenum ="";
+			String output ="";
+			boolean valid = false;
+			int gamenum =0;
 			open();
-			JTextArea area = new JTextArea("choose your game");
+		
 			for(int i =0; i < users.size(); i++){
-				gamenum += toString(users.get(i));
+				output += i +": " + users.get(i).toString() + "\n";
 			}
-			  gamenum += "\n\n please choose the number of the game you wish to load"; 
-			   
-			JOptionPane.showInputDialog(gamenum);
+			  output += "\n\n please choose the number of the game you wish to load"; 
+			do{
+				try{
+					gamenum = Integer.parseInt(JOptionPane.showInputDialog(output));
+					valid = true;
+				}catch(NumberFormatException a){
+					JOptionPane.showMessageDialog(null,"Please enter a whole number");
+				}  		
+			}while(valid == false); 	
 			
+			
+			u1.setName(users.get(gamenum).getName());
+			u1.setAge(users.get(gamenum).getAge());
+			u1.setBalance(users.get(gamenum).getBalance());
+			table.getBal(u1.getBalance());
 			
 		}	
 	}
 	
-	public void setBal(int balance)
-	{
-		this.balance = balance;
-	}
+//	public void setBal(int balance)
+//	{
+//		this.balance = balance;
+//	}
+	
+	public void addUser(){
+        User temp = new User(u1.getName(),u1.getAge(), u1.getBalance());
+      	
+      	users.add(temp); 
+      }
 	
 	public void save() throws IOException {
       	
@@ -193,12 +215,12 @@ public class MainMenuGUI extends JFrame implements ActionListener {
       	try{
       	  ObjectInputStream is;
       	  is = new ObjectInputStream(new FileInputStream ("users.dat"));
-          users  = (ArrayList<User>) is.readObject(); // CHANGED
+          users  = (ArrayList<User>) is.readObject(); 
       	  is.close();
       	}
       	catch(Exception e){
       		JOptionPane.showMessageDialog(null,"open didn't work");
       		e.printStackTrace();
       	}
-      } // end
+      }
 }

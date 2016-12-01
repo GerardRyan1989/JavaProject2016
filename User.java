@@ -20,7 +20,7 @@ public class User implements Serializable{
 	private double balance;
 	
 	/**
-	 *cretes a new student with default values of "unknown", 0,0.0
+	 *creates a new student with default values of ("unknown", 0,0.0)
 	 **/
 	public User(){
 		this("Unknown",0,0.0);
@@ -88,6 +88,6 @@ public class User implements Serializable{
 	 *@return string value of users forename and  surname, age and balance
 	 */
 	public String toString(){
-		return uName +" " + age + " €" + String.format("%.2f",balance);
+		return uName +" " + age + " â‚¬" + String.format("%.2f",balance);
 	}
 }

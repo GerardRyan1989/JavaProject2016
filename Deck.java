@@ -1,31 +1,29 @@
 import javax.swing.*;
-import java.util.*;
-import java.util.ArrayList;
+
 
 public class Deck{
-	
-	
-	private String suit="";
-	private String name="";
-	private int value =0, num =0;
-    static Card [] deck = new Card[52];
-    static Card [] shuffled = new Card[52];
+
+	private String suit="";       // card Suit
+	private String name="";       // card Name
+	private int value =0, num =0; // value is int vlaue of card,// num is increment each time in for loop and reaches a value of 51, this is used to get an imageIcon
+    static Card [] deck = new Card[52];// an  array to hold 52 cards in the order of 1 to 52
+    static Card [] shuffled = new Card[52];//an array to hold a 52 cards in a random order
 	
 	public Deck(){
 		for(int j =0; j < 4; j++){
 			switch(j){
-				case 0: suit = "Clubs";
-						break;
-					
-				case 1: suit = "Diamonds";
-						break;
+				case 0: suit = "Clubs";         // the outer loop run 4 times and changes suit on each loop
+						break;                  // the inner loop runs 13 times for every time the outer loop runs once creating 52 cards in total
+					                           // the cards get their values from the switch statement in each loop for example if the outer loop
+				case 1: suit = "Diamonds";     // was 3 and the inner loop 7 the card  would have the following values
+						break;                 // suit : Hearts, Name: Five, Value: 5
 						
 				case 2: suit = "Hearts";
 						break;
 						
 				case 3: suit = "Spades";
 						break;
-			}
+			}//end of switch statement
 				
 			
 			for(int i = 0; i < 13; i++){
@@ -69,33 +67,31 @@ public class Deck{
 		 		case 12: name = "King";
 		 		         value = 10;
 		 				break;
-		 	}
-		 	deck[num] = new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".jpg"));
+		 	}//end of switch statement
+		 	deck[num] = new Card(name,suit,value,new ImageIcon("cards/"+(num+1)+".jpg"));//populating the array with cards
 		 	
-		 	num++;
+		 	num++;//incrementing num so array will reach 52
 		 	
-			}
-		}
+			}//end of the inner nested loop
+		}//end of the outer loop
 			
-	}
-	
+	}//end of the deck constructor
+
 	public void shuffledDeck(){
-		boolean [] check = new boolean[52];
-	    
-		for(int i = 0; i < 52; i++)
-			{
-				int random = (int)(Math.random()*52);
-				
-				while(check[random])
+		boolean [] check = new boolean[52];                              //this populates the shuffled deck in a random order with out any cards repeating
+		for(int i = 0; i < 52; i++)										//it uses a boolean array of the same size as shuffled array which set to false
+			{															//it generates a random number from 1 to 52 and if this element of the array matching the random number
+				int random = (int)(Math.random()*52);					//is set to true it will loop till it generates a random number where the matching element of the boolean array is
+				while(check[random])									//false and it will then store the element of deck matching the random number in the shuffled array
 				{	
 						random = (int)(Math.random()*52);	
 				}
 				
 				check[random] = true;
 				shuffled[i] = deck[random];
-			}
+			}//end of loop
 				
 		
-		}
-}
+		}// end of shuffled deck method
+}//end of main
 
